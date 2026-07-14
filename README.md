@@ -67,8 +67,8 @@ P [W] = I × A × η × (1 − γ × (T_cell − 20)) − β × (RH − RH_ref) 
 ### 1. 저장소 클론
 
 ```bash
-git clone https://github.com/<your-username>/solar-panel-simulator.git
-cd solar-panel-simulator
+git clone https://github.com/rhktkd/Solar-Panel-Projact.git
+cd Solar-Panel-Projact
 ```
 
 ### 2. 의존성 설치
