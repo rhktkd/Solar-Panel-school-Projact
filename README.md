@@ -156,6 +156,6 @@ solarDebug.disable()         // 디버그 모드 종료 → 실제 시간 복귀
 
 ---
 
-## 📄 라이선스
+## 라이선스
 
 MIT License
