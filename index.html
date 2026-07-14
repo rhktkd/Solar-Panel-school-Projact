@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>태양광 발전량 예측 시스템</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 배경을 담당할 Div -->
+    <div id="bg-container" class="bg-container"></div>
+
+    <!-- 메인 컨테이너 -->
+    <div class="app-container">
+        <!-- 오른쪽 상단 반투명 유리창 결과 창 -->
+        <div id="glass-panel" class="glass-panel">
+            <div class="panel-header">
+                <h2>태양광 발전 현황</h2>
+                <div class="time-display" id="current-time">00:00:00</div>
+            </div>
+
+            <div class="panel-section">
+                <h3>위치 및 날씨 정보</h3>
+                <div class="info-grid">
+                    <!-- 가로로 길게 한 칸을 모두 차지하도록 클래스 추가 -->
+                    <div class="info-card full-width">
+                        <span class="label">사용자 위치</span>
+                        <span class="value" id="user-location">추적 중...</span>
+                    </div>
+                    <div class="info-card">
+                        <span class="label">기온</span>
+                        <span class="value" id="weather-temp">- °C</span>
+                    </div>
+                    <div class="info-card">
+                        <span class="label">상대 습도</span>
+                        <span class="value" id="weather-humidity">- %</span>
+                    </div>
+                    <div class="info-card full-width">
+                        <span class="label">현재 일사강도</span>
+                        <span class="value" id="solar-radiation">- W/m²</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section compact-slider">
+                <h3>태양광 패널 설정</h3>
+                <div class="slider-container">
+                    <div class="slider-header">
+                        <span class="label">패널 면적</span>
+                        <span class="value"><span id="panel-area-val">15</span> m²</span>
+                    </div>
+                    <input type="range" id="panel-area-slider" min="1" max="100" value="15" step="1">
+                </div>
+            </div>
+
+            <div class="panel-section highlight compact-power">
+                <h3>예측 생산 전력</h3>
+                <div class="power-display">
+                    <span class="power-value" id="generated-power">0.00</span>
+                    <span class="power-unit">W</span>
+                </div>
+            </div>
+            
+            <div class="api-status" id="api-status-msg" style="display: none;">API 키를 설정해주세요 (.env)</div>
+        </div>
+
+        <!-- 우측 하단 기상청 제공 표기 -->
+        <div class="kma-attribution">
+            <span>Data provided by Korea Meteorological Administration (기상청 API허브)</span>
+        </div>
+    </div>
+
+    <!-- API 요청 프록시 또는 브라우저 로직 처리용 메인 스크립트 -->
+    <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+:root {
+    --glass-blur: 20px;
+    --glass-opacity: 0.3;
+    --glass-color: rgba(255, 255, 255, var(--glass-opacity));
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --text-color: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.7);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --accent-color: #ffd700;
+}
+
+/* ==========================================================================
+   시간대별 완벽한 테마 스타일 (글자색, 카드배경, 하이라이트, 악센트 통합제어)
+   ========================================================================== */
+
+/* 1. 새벽 테마 (Dawn) - 짙은 회색 & 세련된 푸른 보라색 포인트 */
+.glass-panel.tz-dawn {
+    --text-color: #2b3a4a;        /* 짙은 남회색 */
+    --text-muted: rgba(43, 58, 74, 0.7);
+    --glass-border: rgba(43, 58, 74, 0.15);
+    --accent-color: #5c6bc0;      /* 세련된 퍼플블루 */
+    --card-bg: rgba(43, 58, 74, 0.05);
+    --highlight-bg: rgba(92, 107, 192, 0.12);
+    --highlight-border: rgba(92, 107, 192, 0.3);
+}
+
+/* 2. 아침 테마 (Morning) - 차분한 회색 & 산뜻한 올리브그린/블루 포인트 */
+.glass-panel.tz-morning {
+    --text-color: #455a64;        /* 차분한 청회색 */
+    --text-muted: rgba(69, 90, 100, 0.75);
+    --glass-border: rgba(69, 90, 100, 0.15);
+    --accent-color: #0288d1;      /* 활기찬 블루 */
+    --card-bg: rgba(69, 90, 100, 0.05);
+    --highlight-bg: rgba(2, 136, 209, 0.12);
+    --highlight-border: rgba(2, 136, 209, 0.3);
+}
+
+/* 3. 정오 테마 (Noon) - 선명한 다크 그레이 & 강력한 골드/오렌지 포인트 */
+.glass-panel.tz-noon {
+    --text-color: #37474f;        /* 짙은 회색 */
+    --text-muted: rgba(55, 71, 79, 0.75);
+    --glass-border: rgba(55, 71, 79, 0.15);
+    --accent-color: #e65100;      /* 강력한 오렌지 */
+    --card-bg: rgba(55, 71, 79, 0.05);
+    --highlight-bg: rgba(230, 81, 0, 0.12);
+    --highlight-border: rgba(230, 81, 0, 0.3);
+}
+
+/* 4. 저녁 테마 (Evening) - 세련된 어두운 흰색 & 붉은 노을 엠버 골드 포인트 */
+.glass-panel.tz-evening {
+    --text-color: #eceff1;        /* 부드러운 밝은 그레이 */
+    --text-muted: rgba(236, 239, 241, 0.7);
+    --glass-border: rgba(236, 239, 241, 0.15);
+    --accent-color: #ffb300;      /* 앰버 골드 */
+    --card-bg: rgba(255, 255, 255, 0.06);
+    --highlight-bg: rgba(255, 179, 0, 0.15);
+    --highlight-border: rgba(255, 179, 0, 0.3);
+}
+
+/* 5. 밤 테마 (Night) - 선명한 화이트 & 영롱한 옐로우/네온 골드 포인트 */
+.glass-panel.tz-night {
+    --text-color: #ffffff;        /* 흰색 */
+    --text-muted: rgba(255, 255, 255, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --accent-color: #ffd700;      /* 네온 골드 */
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --highlight-bg: rgba(255, 215, 0, 0.15);
+    --highlight-border: rgba(255, 215, 0, 0.3);
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+    color: var(--text-color);
+}
+
+/* 배경 이미지 컨테이너 */
+.bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1.5s ease-in-out;
+    z-index: 1;
+}
+
+/* 메인 앱 컨테이너 */
+.app-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none; /* 배경 클릭 가능하도록 하되 패널은 다시 pointer-events auto 적용 */
+}
+
+/* 우측 상단 배치된 유리창 패널 */
+.glass-panel {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 380px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    background: var(--glass-color);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 8px 32px 0 var(--shadow-color);
+    pointer-events: auto; /* 터치/클릭 입력 활성화 */
+    transition: background 0.3s, border 0.3s, backdrop-filter 0.3s;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-muted) transparent;
+}
+
+.glass-panel::-webkit-scrollbar {
+    width: 6px;
+}
+.glass-panel::-webkit-scrollbar-thumb {
+    background-color: var(--text-muted);
+    border-radius: 3px;
+}
+
+.panel-header {
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+}
+
+.panel-header h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 4px;
+}
+
+.time-display {
+    font-size: 1.1rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.panel-section {
+    margin-bottom: 24px;
+}
+
+.panel-section h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    color: var(--text-muted);
+}
+
+/* 정보 그리드 */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.info-card {
+    background: var(--card-bg, rgba(255, 255, 255, 0.08));
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s, border 0.3s;
+}
+
+.info-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.info-card .label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.info-card .value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    word-break: break-all;
+}
+
+/* 슬라이더 스타일 */
+.slider-container {
+    background: var(--card-bg, rgba(255, 255, 255, 0.08));
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 12px 16px;
+    transition: background 0.3s, border 0.3s;
+}
+
+.compact-slider {
+    margin-bottom: 16px;
+}
+
+.slider-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.slider-header .label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.slider-header .value {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--accent-color);
+}
+
+input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    background: rgba(255, 255, 255, 0.2);
+    height: 6px;
+    border-radius: 3px;
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0,0,0,0.3);
+    transition: transform 0.1s, background-color 0.3s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* 강조된 생산 전력 구역 */
+.panel-section.highlight {
+    background: var(--highlight-bg, rgba(255, 215, 0, 0.15));
+    border: 1px solid var(--highlight-border, rgba(255, 215, 0, 0.3));
+    border-radius: 16px;
+    padding: 16px;
+    text-align: center;
+    transition: background 0.3s, border 0.3s;
+}
+
+
+.compact-power {
+    margin-bottom: 16px;
+}
+
+.panel-section.highlight h3 {
+    color: var(--accent-color);
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+}
+
+.power-display {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.power-value {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--accent-color);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.power-unit {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-left: 6px;
+}
+
+
+/* 커스텀 조작 패널 */
+.custom-controls {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.control-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.control-row:last-child {
+    margin-bottom: 0;
+}
+
+.control-row label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.control-row input[type="range"] {
+    width: 50%;
+}
+
+.control-row input[type="color"] {
+    border: none;
+    width: 40px;
+    height: 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    background: transparent;
+}
+
+.control-row select {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: inherit;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-family: inherit;
+    outline: none;
+    cursor: pointer;
+}
+
+.control-row select option {
+    background: #222;
+    color: #fff;
+}
+
+/* API 상태 메시지 */
+.api-status {
+    font-size: 0.75rem;
+    text-align: center;
+    color: var(--text-muted);
+    margin-top: 12px;
+    font-style: italic;
+}
+
+/* 어두운 텍스트 테마 적용시 */
+.glass-panel.dark-theme {
+    --text-color: #1a1a1a;
+    --text-muted: rgba(0, 0, 0, 0.6);
+    --glass-border: rgba(0, 0, 0, 0.15);
+    --shadow-color: rgba(0, 0, 0, 0.15);
+}
+
+.glass-panel.dark-theme .info-card {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.glass-panel.dark-theme .slider-container {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.glass-panel.dark-theme input[type="range"] {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* 기상청 제공 표기 스타일 */
+.kma-attribution {
+    position: absolute;
+    bottom: 16px;
+    right: 24px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    pointer-events: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
