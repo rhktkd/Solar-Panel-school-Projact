@@ -270,9 +270,9 @@ async function fetchKMAWeatherData() {
             dynamicWeather.temp = resJson.data.temp;
             dynamicWeather.humidity = resJson.data.humidity;
             
-            if (resJson.data.solarRadiation > 0) {
-                dynamicWeather.solarRadiation = resJson.data.solarRadiation;
-            }
+        if (resJson.data.solarRadiation !== undefined && !isNaN(resJson.data.solarRadiation) && resJson.data.solarRadiation >= 0) {
+            dynamicWeather.solarRadiation = resJson.data.solarRadiation;
+        }
 
             statusEl.style.display = "none";
             console.log("기상청 API 연동 성공:", dynamicWeather);
