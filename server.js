@@ -113,11 +113,11 @@ app.get('/api/weather', async (req, res) => {
                 // parts[11]: TA (기온 C) ★
                 // parts[12]: TD (이슬점온도)
                 // parts[13]: HM (상대습도 %) ★
-                // parts[34]: SI (일사강도 MJ/m2) ★
+                // parts[29]: SI (일사강도 MJ/m2) ★
                 
                 const tempVal = parseFloat(parts[11]);
                 const humidityVal = parseFloat(parts[13]);
-                let solarVal = parseFloat(parts[34]);
+                let solarVal = parseFloat(parts[29]);
 
                 // 기상청 관측값 예외 (-9 또는 누락) 처리
                 const temp = isNaN(tempVal) || tempVal <= -9 ? 20.0 : tempVal;
